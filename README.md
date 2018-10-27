@@ -7,3 +7,4 @@
   * create HelloResource
  * add security
    * Maven Dependency(cloud-security)
+   * Test rest security
