@@ -11,3 +11,4 @@
  * Connection mysql
    * Maven Dependency(mysql、jpa)
    * properties add db Connection
+   * create Entity
