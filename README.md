@@ -8,3 +8,6 @@
  * add security
    * Maven Dependency(cloud-security)
    * Test rest security
+ * Connection mysql
+   * Maven Dependency(mysql、jpa)
+   * properties add db Connection
