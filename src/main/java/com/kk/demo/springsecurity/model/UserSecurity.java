@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class UserSecurity {
 
     @Id
     @Column(name = "user_sid", nullable = false, length = 36)
