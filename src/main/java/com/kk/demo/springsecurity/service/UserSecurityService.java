@@ -41,11 +41,13 @@ public class UserSecurityService implements UserDetailsService {
 
     private User transUser(UserSecurity userEntity) {
         List<SimpleGrantedAuthority> authoritieList = Lists.newArrayList();
+        String role = "ROLE_";
         if (this.ADMIN_NAME.equals(userEntity.getName())) {
-            authoritieList.add(new SimpleGrantedAuthority(this.ROLE_ADMIN));
+            role += this.ROLE_ADMIN;
         } else {
-            authoritieList.add(new SimpleGrantedAuthority(this.ROLE_USER));
+            role += this.ROLE_USER;
         }
+        authoritieList.add(new SimpleGrantedAuthority(role));
         return new User(userEntity.getName(), userEntity.getPassword(), authoritieList);
     }
 

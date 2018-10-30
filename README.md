@@ -12,3 +12,5 @@
    * Maven Dependency(mysql、jpa)
    * properties add db Connection
    * create Entity
+   * Override UserDetailsService
+   * Test rest security (DB)

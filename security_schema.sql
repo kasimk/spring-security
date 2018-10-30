@@ -27,9 +27,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`user_sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='使用者';
 
--- 正在導出表  security.user 的資料：~0 rows (大約)
+-- 正在導出表  security.user 的資料：~3 rows (大約)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`user_sid`, `name`, `password`, `status`) VALUES
+	('50d9d21d-c884-4d3c-bff4-2ccd944e471a', 'user2', '1234', 'INACTIVE'),
+	('601694a6-3509-46ac-bbab-88a6c040afc6', 'user1', '1234', 'ACTIVE'),
+	('b3e44dfd-f237-49cd-bc1a-67801b20ae7c', 'kasim', '1234', 'ACTIVE');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

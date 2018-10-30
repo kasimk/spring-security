@@ -1,19 +1,21 @@
 package com.kk.demo.springsecurity.config;
 
-import org.springframework.context.annotation.Bean;
+import com.kk.demo.springsecurity.service.UserSecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final String ROLE_USER = "USER";
+    @Autowired
+    private UserSecurityService userSecurityService;
+
     private final String ROLE_ADMIN = "ADMIN";
 
     /**
@@ -30,25 +32,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 在記憶體中建立一個使用者
-     *
-     * @return UserDetailsService
+     * 添加 UserDetailsService，實現自訂義登入
      */
-    @Bean
     @Override
-    protected UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        User.UserBuilder user1 = User.withDefaultPasswordEncoder();
-        user1.username("kasim");
-        user1.password("test");
-        user1.roles(this.ROLE_ADMIN);
-        manager.createUser(user1.build());
-
-        User.UserBuilder user2 = User.builder();
-        user2.username("test");
-        user2.password("test");
-        user2.roles(this.ROLE_USER);
-        manager.createUser(user2.build());
-        return manager;
+    protected void configure(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(this.userSecurityService)
+                .passwordEncoder(getPasswordEncoder());
     }
+
+    private PasswordEncoder getPasswordEncoder() {
+
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence charSequence) {
+                return charSequence.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence charSequence, String s) {
+                return s.equals(charSequence.toString());
+            }
+        };
+
+    }
+
 }
